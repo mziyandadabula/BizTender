@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background: #FAFAF7;
+  color: #0F172A;
+}
+
+/* Signature element: the readiness seal — a stamp-edged circular badge. */
+.readiness-seal {
+  --seal-color: #A9791F;
+  position: relative;
+  width: 96px;
+  height: 96px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: conic-gradient(from -90deg, var(--seal-color) calc(var(--pct, 0) * 1%), #E2E1DB 0);
+}
+.readiness-seal::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 9999px;
+  background: #FAFAF7;
+  box-shadow: inset 0 0 0 1.5px rgba(15, 23, 42, 0.08);
+}
+.readiness-seal__value {
+  position: relative;
+  font-family: var(--font-fraunces), serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #0F172A;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid #A9791F;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
