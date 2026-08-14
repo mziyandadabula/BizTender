@@ -51,7 +51,7 @@ export class MockCIPCProvider implements CIPCProvider {
 
     return {
       query,
-      results: scored.map(({ score, ...rest }) => rest),
+      results: scored.map(({ score, ...rest }) => rest) as CIPCNameSearchResponse["results"],
       overallSignal: overallSignal(bands),
       source: "mock",
       retrievedAt: new Date().toISOString(),
