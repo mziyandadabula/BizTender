@@ -10,8 +10,22 @@ export function getServerSupabase() {
     {
       cookies: {
         get: (name: string) => cookieStore.get(name)?.value,
-        set: (name: string, value: string, options: any) => cookieStore.set({ name, value, ...options }),
-        remove: (name: string, options: any) => cookieStore.set({ name, value: "", ...options }),
+        set: (name: string, value: string, options: any) => {
+          try {
+            cookieStore.set({ name, value, ...options });
+          } catch {
+            // Called from a Server Component render, where Next.js forbids writing
+            // cookies. Safe to ignore — the session still refreshes on the next
+            // request via middleware/route handlers.
+          }
+        },
+        remove: (name: string, options: any) => {
+          try {
+            cookieStore.set({ name, value: "", ...options });
+          } catch {
+            // Same as above — safe to ignore here.
+          }
+        },
       },
     }
   );
