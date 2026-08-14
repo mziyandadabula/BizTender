@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function CheckoutPage() {
+function CheckoutForm() {
   const params = useSearchParams();
   const productSlug = params.get("product");
   const [error, setError] = useState<string | null>(null);
@@ -33,7 +33,7 @@ export default function CheckoutPage() {
   }, [payment]);
 
   return (
-    <main className="mx-auto max-w-xl px-6 py-20 text-center">
+    <>
       <h1 className="font-display text-2xl font-semibold">Redirecting you to PayFast…</h1>
       {error && <p className="mt-4 text-signal-red">{error}</p>}
       {!error && <p className="mt-3 text-slate">Please wait, this only takes a moment.</p>}
@@ -45,6 +45,16 @@ export default function CheckoutPage() {
           ))}
         </form>
       )}
+    </>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <main className="mx-auto max-w-xl px-6 py-20 text-center">
+      <Suspense fallback={<p className="text-slate">Loading checkout…</p>}>
+        <CheckoutForm />
+      </Suspense>
     </main>
   );
 }
